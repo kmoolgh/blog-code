@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Blog</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>My Advanced Blog</h1>
+        <nav>
+            <ul id="nav-links">
+                <!-- JavaScript will dynamically populate navigation links -->
+            </ul>
+        </nav>
+    </header>
+    <main id="content">
+        <section id="post1" class="post">
+            <h2>Post 1 Title</h2>
+            <p>Post 1 content.</p>
+        </section>
+        <section id="post2" class="post">
+            <h2>Post 2 Title</h2>
+            <p>Post 2 content.</p>
+        </section>
+        <section id="post3" class="post">
+            <h2>Post 3 Title</h2>
+            <p>Post 3 content.</p>
+        </section>
+    </main>
+    <footer>
+        <h2>Leave a Comment</h2>
+        <form id="comment-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="comment">Comment:</label>
+            <textarea id="comment" name="comment" required></textarea>
+            <button type="submit">Post Comment</button>
+        </form>
+        <div id="comments-section">
+            <!-- JavaScript will dynamically load comments here -->
+        </div>
+        <p>Contact me: your-email@example.com</p>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.getElementById('nav-links');
+            const sections = document.querySelectorAll('.post');
+            sections.forEach(section => {
+                const navItem = document.createElement('li');
+                const link = document.createElement('a');
+                link.href = `#${section.id}`;
+                link.textContent = section.querySelector('h2').textContent;
+                navItem.appendChild(link);
+                navLinks.appendChild(navItem);
+            });
+
+            const form = document.getElementById('comment-form');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const comment = {
+                    name: form.name.value,
+                    email: form.email.value,
+                    message: form.comment.value,
+                    date: new Date().toLocaleString(),
+                };
+                displayComment(comment);
+                form.reset();
+            });
+        });
+
+        function displayComment(comment) {
+            const commentSection = document.getElementById('comments-section');
+            const commentDiv = document.createElement('div');
+            commentDiv.classList.add('comment');
+            commentDiv.innerHTML = `
+                <p><strong>${comment.name}</strong> (${comment.date})</p>
+                <p>${comment.message}</p>
+            `;
+            commentSection.appendChild(commentDiv);
+        }
+    </script>
+</body>
+</html>
